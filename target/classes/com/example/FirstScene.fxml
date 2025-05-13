@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="com.example.FirstSceneController" 
+            fx:id="rootPane" 
+            style="-fx-background-color: black;">
+    <children>
+        <!-- Hintergrundbild - optimiert für Fullscreen -->
+        <ImageView fx:id="backgroundImage" 
+                   preserveRatio="false"
+                   AnchorPane.topAnchor="0" 
+                   AnchorPane.bottomAnchor="0" 
+                   AnchorPane.leftAnchor="0" 
+                   AnchorPane.rightAnchor="0">
+            <image>
+                <Image url="@Images/Scene Template  1.jpg"/>
+            </image>
+        </ImageView>
+        
+        <!-- Back Button (unverändert) -->
+        <Button fx:id="topRightButton" text="" 
+                AnchorPane.topAnchor="20" 
+                AnchorPane.leftAnchor="20">
+            <graphic>
+                <ImageView fitWidth="200" fitHeight="80">
+                    <image>
+                        <Image url="@Images/BACK Button.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </children>
+</AnchorPane>

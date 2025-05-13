@@ -1,0 +1,14 @@
+/* Make buttons transparent */
+#playButton, #quitButton, #topRightButton {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Highlight effect for buttons when hovered */
+#playButton:hover, #quitButton:hover, #topRightButton:hover {
+    -fx-background-color: #10a7a263;
+    -fx-cursor: hand;
+}

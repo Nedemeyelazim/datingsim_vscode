@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.MenuController" fx:id="rootPane" style="-fx-background-color: black;">
+    <children>
+        <!-- Hintergrundbild, das den gesamten Hintergrund ausfüllt -->
+        <ImageView fx:id="backgroundImage" preserveRatio="true" fitWidth="1920" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+            <image>
+                <Image url="@Images/Zhuāng Zhōu Liè Guó Zh - Menu Backgroundd.jpg" />
+            </image>
+        </ImageView>
+        
+        <!-- Play Button an fixer Position -->
+        <Button fx:id="playButton" onAction="#handlePlay" layoutX="265" layoutY="441" text="">
+            <graphic>
+                <ImageView fitWidth="193" fitHeight="74">
+                    <image>
+                        <Image url="@Images/PLAY Button Menu.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        
+        <!-- Quit Button an fixer Position -->
+        <Button fx:id="quitButton" onAction="#handleQuit" layoutX="265" layoutY="654" text="">
+            <graphic>
+                <ImageView fitWidth="162" fitHeight="82">
+                    <image>
+                        <Image url="@Images/QUIT Button Menu.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </children>
+</AnchorPane>
