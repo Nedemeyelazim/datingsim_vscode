@@ -1,0 +1,6 @@
+[Anna]
+Hallo, wie geht's?
+[Berta]
+Mir geht's gut, danke. Und dir?
+[Anna]
+Auch gut, vielen Dank!
