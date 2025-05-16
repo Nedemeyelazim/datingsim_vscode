@@ -1,11 +1,13 @@
 package com.example;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import com.example.dialogue.DialogueManager;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,23 +22,30 @@ public class App extends Application {
 
     private static Scene scene;
     private static Stage primaryStage;
-    private static final DialogueManager dialogueManager = new DialogueManager();
-    private static Label dialogueLabel; // Moved to class level
+    private static final DialogueManager dialogueManager = DialogueManager.getInstance();
+    private static Label dialogueLabel;
 
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
 
-        // Menü-Szene laden
         try {
+            // Load dialogue first
+            try (InputStream dialogueStream = getClass().getResourceAsStream("/com/example/dialogue.txt")) {
+                if (dialogueStream == null) {
+                    System.out.println("FEHLER: dialogue.txt nicht gefunden!");
+                    return;
+                }
+                dialogueManager.loadDialogueFromStream(dialogueStream);
+                System.out.println("Dialog erfolgreich geladen!");
+            }
+
+            // Load menu scene
             Parent menuRoot = loadFXML("menu");
             scene = new Scene(menuRoot);
-            scene.getStylesheets().add(App.class.getResource("menu.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("menu.css").toExternalForm());
             
-            scene.setOnMouseClicked(event -> {
-                System.out.println("Mausposition - X: " + event.getX() + ", Y: " + event.getY());
-            });
-
+            // Configure stage
             primaryStage.setScene(scene);
             primaryStage.setTitle("Dating Sim - Menu");
             primaryStage.setMaximized(true);
@@ -45,54 +54,8 @@ public class App extends Application {
             primaryStage.setFullScreen(true);
             primaryStage.show();
 
-            // Debug: Prüfe ob Dialogdatei existiert
-            var dialogueResource = App.class.getResource("/dialogue.txt");
-            if (dialogueResource == null) {
-                System.out.println("FEHLER: dialogue.txt nicht gefunden!");
-                return;
-            }
-
-            // Dialogdatei laden
-            dialogueManager.loadDialogue(dialogueResource.getPath());
-            System.out.println("Dialog erfolgreich geladen");
-
-            // Wechsel zur FirstScene
-            try {
-                Parent firstSceneRoot = loadFXML("FirstScene");
-                scene.setRoot(firstSceneRoot);
-                
-                // Dialog Label nach dem Scene-Aufbau platzieren
-                Platform.runLater(() -> {
-                    dialogueLabel = (Label) firstSceneRoot.lookup("#dialogueLabel");
-                    if (dialogueLabel == null) {
-                        System.out.println("FEHLER: dialogueLabel nicht gefunden!");
-                        return;
-                    }
-                    
-                    // Neue Position setzen
-                    dialogueLabel.setLayoutX(225.0);
-                    dialogueLabel.setLayoutY(629.0);
-                    
-                    // Weitere Eigenschaften
-                    dialogueLabel.setWrapText(true);
-                    dialogueLabel.setPrefWidth(1120);
-                    dialogueLabel.setPrefHeight(207);
-                    
-                    // Debug
-                    System.out.println("Label neu positioniert: X=" + dialogueLabel.getLayoutX() 
-                                      + ", Y=" + dialogueLabel.getLayoutY());
-                });
-
-                // Key-Listener
-                scene.addEventHandler(KeyEvent.KEY_PRESSED, this::handleKeyPress);
-
-            } catch (Exception e) {
-                System.out.println("Fehler beim Laden der FirstScene: " + e.getMessage());
-                e.printStackTrace();
-            }
-
         } catch (Exception e) {
-            System.out.println("Allgemeiner Fehler: " + e.getMessage());
+            System.out.println("Fehler beim Start: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -113,18 +76,6 @@ public class App extends Application {
         gameContainer.setScaleY(scale);
     }
 
-    private void handleKeyPress(KeyEvent event) {
-        if (event.getCode() == KeyCode.SPACE && dialogueLabel != null) {
-            if (dialogueManager.hasMoreDialogue()) {
-                DialogueManager.DialogueLine currentLine = dialogueManager.getCurrentLine();
-                dialogueLabel.setText(currentLine.toString());
-                dialogueManager.advanceDialogue();
-            } else {
-                dialogueLabel.setText("Ende des Dialogs.");
-            }
-        }
-    }
-
     /**
      * Setzt den Root der aktuellen Scene auf die übergebene FXML-Datei.
      * Beispiel: App.setRoot("FirstScene") wechselt vom Menü zur ersten Spielszene.
@@ -132,15 +83,38 @@ public class App extends Application {
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
         primaryStage.setFullScreen(true);
+        
+        // Dialog initialisieren wenn wir zur FirstScene wechseln
+        if (fxml.equals("FirstScene")) {
+            Platform.runLater(() -> {
+                dialogueLabel = (Label) scene.lookup("#dialogueLabel");
+                if (dialogueLabel != null) {
+                    dialogueManager.initializeDialog(dialogueLabel);
+                    System.out.println("Dialog in FirstScene initialisiert");
+                    
+                    // Space-Taste Event Handler mit höherer Priorität
+                    KeyEventHandler spaceHandler = new KeyEventHandler();
+                    scene.addEventFilter(KeyEvent.KEY_PRESSED, spaceHandler);
+                }
+            });
+        }
+    }
+
+    // Neue Klasse für den KeyEvent Handler
+    private static class KeyEventHandler implements EventHandler<KeyEvent> {
+        @Override
+        public void handle(KeyEvent event) {
+            if (event.getCode() == KeyCode.SPACE) {
+                dialogueManager.showNextLine();
+                event.consume(); // Verhindert, dass andere Handler das Event verarbeiten
+                System.out.println("Space gedrückt - Nächste Dialogzeile");
+            }
+        }
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
-    }
-
-    public static Stage getStage() {
-        return primaryStage;
     }
 
     public static void main(String[] args) {

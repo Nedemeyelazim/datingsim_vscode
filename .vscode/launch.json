@@ -19,6 +19,14 @@
             "classPaths": [
                 "${workspaceFolder}/src"
             ]
+        },
+        {
+            "type": "java",
+            "name": "Launch Dating Sim",
+            "request": "launch",
+            "mainClass": "com.example.App",
+            "projectName": "datingsim",
+            "vmArgs": "--enable-preview --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }

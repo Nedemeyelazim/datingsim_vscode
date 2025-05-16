@@ -38,7 +38,7 @@
                AnchorPane.leftAnchor="50"
                AnchorPane.rightAnchor="50"
                prefWidth="1322"
-               prefHeight="250"
+               prefHeight="150"
                style="-fx-background-color: rgba(0, 0, 0, 0.35);
                       -fx-text-fill: white;
                       -fx-font-size: 24;

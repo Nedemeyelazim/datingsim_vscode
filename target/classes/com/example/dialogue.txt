@@ -1,0 +1,6 @@
+[FirstScene]
+Willkommen in der ersten Szene!
+Dies ist ein Beispieltext für den Dialog.
+Du kannst mit der Leertaste durch den Dialog navigieren.
+Diese Visual Novel wurde mit JavaFX erstellt.
+[End]
