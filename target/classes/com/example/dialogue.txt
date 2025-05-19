@@ -2,5 +2,11 @@
 Willkommen in der ersten Szene!
 Dies ist ein Beispieltext für den Dialog.
 Du kannst mit der Leertaste durch den Dialog navigieren.
-Diese Visual Novel wurde mit JavaFX erstellt.
+Gleich geht es weiter zur zweiten Szene...
+[End]
+
+[SecondScene]
+Willkommen in der zweiten Szene!
+Hier geht die Geschichte weiter.
+Du kannst wieder zurück zur ersten Szene gehen.
 [End]

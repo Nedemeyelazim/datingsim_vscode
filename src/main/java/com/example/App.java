@@ -81,33 +81,79 @@ public class App extends Application {
      * Beispiel: App.setRoot("FirstScene") wechselt vom Menü zur ersten Spielszene.
      */
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-        primaryStage.setFullScreen(true);
+        System.out.println("\n=== Scene Transition Debug ===");
+        System.out.println("Attempting to switch to: " + fxml);
         
-        // Dialog initialisieren wenn wir zur FirstScene wechseln
-        if (fxml.equals("FirstScene")) {
-            Platform.runLater(() -> {
-                dialogueLabel = (Label) scene.lookup("#dialogueLabel");
-                if (dialogueLabel != null) {
-                    dialogueManager.initializeDialog(dialogueLabel);
-                    System.out.println("Dialog in FirstScene initialisiert");
+        try {
+            Parent newRoot = loadFXML(fxml);
+            System.out.println("FXML loaded successfully");
+            
+            scene.setRoot(newRoot);
+            System.out.println("New root set to scene");
+            
+            primaryStage.setFullScreen(true);
+            System.out.println("Fullscreen mode set");
+            
+            // Dialog für beide Szenen initialisieren
+            if (fxml.equals("FirstScene") || fxml.equals("SecondScene")) {
+                System.out.println("Initializing dialogue for " + fxml);
+                
+                Platform.runLater(() -> {
+                    System.out.println("\n=== Dialog Setup Debug ===");
+                    dialogueLabel = (Label) scene.lookup("#dialogueLabel");
+                    System.out.println("Dialog label lookup: " + (dialogueLabel != null ? "found" : "not found"));
                     
-                    // Space-Taste Event Handler mit höherer Priorität
-                    KeyEventHandler spaceHandler = new KeyEventHandler();
-                    scene.addEventFilter(KeyEvent.KEY_PRESSED, spaceHandler);
-                }
-            });
+                    if (dialogueLabel != null) {
+                        dialogueManager.setCurrentScene(fxml);
+                        System.out.println("Current scene set in DialogueManager");
+                        
+                        dialogueManager.initializeDialog(dialogueLabel);
+                        System.out.println("Dialog initialized for " + fxml);
+                        
+                        // Create handler with dependencies
+                        KeyEventHandler spaceHandler = new KeyEventHandler(scene, dialogueManager);
+                        scene.addEventFilter(KeyEvent.KEY_PRESSED, spaceHandler);
+                        System.out.println("Space key handler added with scene and DialogueManager");
+                    } else {
+                        System.out.println("ERROR: Could not find dialogue label in " + fxml);
+                    }
+                });
+            }
+            
+            System.out.println("Scene transition complete");
+            System.out.println("========================\n");
+            
+        } catch (Exception e) {
+            System.out.println("ERROR during scene transition:");
+            System.out.println("Target scene: " + fxml);
+            System.out.println("Error message: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
     }
 
     // Neue Klasse für den KeyEvent Handler
     private static class KeyEventHandler implements EventHandler<KeyEvent> {
+        private final Scene scene;
+        private final DialogueManager dialogueManager;
+
+        public KeyEventHandler(Scene scene, DialogueManager dialogueManager) {
+            this.scene = scene;
+            this.dialogueManager = dialogueManager;
+        }
+
         @Override
         public void handle(KeyEvent event) {
             if (event.getCode() == KeyCode.SPACE) {
+                System.out.println("\n=== KeyEvent Debug ===");
+                System.out.println("Space pressed in scene: " + scene.getRoot().getId());
+                System.out.println("Current DialogueManager state: " + dialogueManager);
+                
                 dialogueManager.showNextLine();
-                event.consume(); // Verhindert, dass andere Handler das Event verarbeiten
-                System.out.println("Space gedrückt - Nächste Dialogzeile");
+                event.consume();
+                
+                System.out.println("Space key event handled");
+                System.out.println("====================\n");
             }
         }
     }
