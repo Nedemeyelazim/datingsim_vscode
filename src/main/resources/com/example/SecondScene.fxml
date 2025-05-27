@@ -14,7 +14,7 @@
     <children>
         <!-- Hintergrundbild -->
         <ImageView fx:id="backgroundImage" preserveRatio="true" fitWidth="1920" 
-                   AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" 
+                   AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0.0" 
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <image>
                 <Image url="@Images/Scene Template  1.png"/>

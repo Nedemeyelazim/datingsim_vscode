@@ -94,8 +94,8 @@ public class App extends Application {
             primaryStage.setFullScreen(true);
             System.out.println("Fullscreen mode set");
             
-            // Dialog für beide Szenen initialisieren
-            if (fxml.equals("FirstScene") || fxml.equals("SecondScene")) {
+            // Dialog für alle Szenen initialisieren
+            if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || fxml.equals("ThirdScene")) {
                 System.out.println("Initializing dialogue for " + fxml);
                 
                 Platform.runLater(() -> {

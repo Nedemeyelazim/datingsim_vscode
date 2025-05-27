@@ -87,8 +87,17 @@ public class DialogueManager {
                         System.out.println("ERROR transitioning to SecondScene: " + e.getMessage());
                         e.printStackTrace();
                     }
+                } else if (currentScene.equals("SecondScene")) {
+                    try {
+                        System.out.println("Transitioning from SecondScene to ThirdScene");
+                        App.setRoot("ThirdScene");
+                        currentScene = "ThirdScene";
+                    } catch (IOException e) {
+                        System.out.println("ERROR transitioning to ThirdScene: " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
-                advanceDialogue(); // Move past the End marker
+                advanceDialogue();
             } else {
                 dialogueLabel.setText(line.getDialogue());
                 System.out.println("Showing dialogue: " + line.getDialogue());

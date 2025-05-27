@@ -9,4 +9,11 @@ Gleich geht es weiter zur zweiten Szene...
 Willkommen in der zweiten Szene!
 Hier geht die Geschichte weiter.
 Du kannst wieder zurück zur ersten Szene gehen.
+Gleich geht es weiter zur dritten Szene...
+[End]
+
+[ThirdScene]
+Willkommen in der dritten Szene!
+Dies ist die letzte Szene der Geschichte.
+Du kannst von hier aus zurück zur zweiten Szene gehen.
 [End]
