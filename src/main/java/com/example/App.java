@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -54,28 +53,11 @@ public class App extends Application {
             primaryStage.setFullScreen(true);
             primaryStage.show();
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Fehler beim Start: " + e.getMessage());
-            e.printStackTrace();
         }
     }
     
-    private void maintainAspectRatio() {
-        if (scene == null) return;
-        
-        AnchorPane gameContainer = (AnchorPane) scene.lookup("#gameContainer");
-        if (gameContainer == null) return;
-        
-        double sceneWidth = scene.getWidth();
-        double sceneHeight = scene.getHeight();
-        
-        // Berechne Skalierungsfaktor für 16:9
-        double scale = Math.min(sceneWidth / 1920.0, sceneHeight / 1080.0);
-        
-        gameContainer.setScaleX(scale);
-        gameContainer.setScaleY(scale);
-    }
-
     /**
      * Setzt den Root der aktuellen Scene auf die übergebene FXML-Datei.
      * Beispiel: App.setRoot("FirstScene") wechselt vom Menü zur ersten Spielszene.
@@ -123,11 +105,10 @@ public class App extends Application {
             System.out.println("Scene transition complete");
             System.out.println("========================\n");
             
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("ERROR during scene transition:");
             System.out.println("Target scene: " + fxml);
             System.out.println("Error message: " + e.getMessage());
-            e.printStackTrace();
             throw e;
         }
     }

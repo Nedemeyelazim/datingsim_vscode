@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,28 +38,6 @@ public class DialogueManager {
         }
     }
 
-    private void loadDefaultDialogue() {
-        URL dialogueResource = getClass().getResource("/com/example/dialogue.txt");
-        System.out.println("Suche Dialog in: " + dialogueResource);
-        
-        if (dialogueResource == null) {
-            System.out.println("FEHLER: dialogue.txt nicht gefunden!");
-            return;
-        }
-
-        try {
-            loadDialogue(dialogueResource.getPath());
-            System.out.println("Dialog geladen, zeige erste Zeile...");
-            if (hasMoreDialogue()) {
-                showNextLine();
-                System.out.println("Erste Zeile angezeigt!");
-            }
-        } catch (Exception e) {
-            System.out.println("Fehler beim Laden des Dialogs: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     public void showNextLine() {
         System.out.println("\n=== DialogueManager Debug ===");
         System.out.println("Current Scene: " + currentScene);
@@ -85,7 +62,6 @@ public class DialogueManager {
                         currentScene = "SecondScene";
                     } catch (IOException e) {
                         System.out.println("ERROR transitioning to SecondScene: " + e.getMessage());
-                        e.printStackTrace();
                     }
                 } else if (currentScene.equals("SecondScene")) {
                     try {
@@ -94,7 +70,6 @@ public class DialogueManager {
                         currentScene = "ThirdScene";
                     } catch (IOException e) {
                         System.out.println("ERROR transitioning to ThirdScene: " + e.getMessage());
-                        e.printStackTrace();
                     }
                 }
                 advanceDialogue();
