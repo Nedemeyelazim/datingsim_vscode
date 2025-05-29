@@ -1,7 +1,8 @@
 package com.example;
 
+import java.io.IOException;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
@@ -13,11 +14,7 @@ public class MenuController {
     @FXML
     private AnchorPane rootPane;
 
-    @FXML
-    private Button playButton;
 
-    @FXML
-    private Button quitButton;
 
     @FXML
     public void initialize() {
@@ -32,8 +29,7 @@ public class MenuController {
         try {
             // Wechsel zur FirstScene
             App.setRoot("FirstScene");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
         }
     }
 
