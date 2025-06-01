@@ -1,10 +1,18 @@
 [FirstScene]
 Asien, späte Han-Dynastie. Das einst mächtige Kaiserreich ist zerbrochen, zerrissen von endlosen Kriegen, Intrigen und Verrat.
-Was einst unter einem einzigen Banner blühte, liegt nun in drei Teile gespalten: Wei, mächtig und reich an Ressourcen im Norden, Wu, stolz und maritim stark im Süden – und Shu, klein, gebirgig und voller Idealismus im Westen. 
-Die Menschen leben zwischen Hunger und Hoffnung, zwischen Schwert und Feder. Auf den Märkten wird geflüstert, dass das Zeitalter der Helden angebrochen sei – oder das Ende aller Dinge.
-Händler fürchten marodierende Truppen, Bauern verstecken ihre Töchter vor durchziehenden Generälen, und Dichter schreiben Gedichte, die niemand mehr laut vorliest. 
-Inmitten dieser zerrissenen Welt agieren Männer und Frauen im Schatten – Spione, Gesandte, Kriegsstrategen mit mehr Charme als Skrupel. Es heißt, eine einzige Verbindung, ein einziger Pakt – oder ein einziger Kuss – könne über Sieg oder Niederlage entscheiden. 
-Und irgendwo im Reich Shu, weit entfernt vom Blick der Generäle, macht sich jemand auf den Weg. Noch kennt ihn niemand. Noch hat er keine Spur in der Geschichte hinterlassen. Doch das wird sich bald ändern…
+Was einst unter einem einzigen Banner blühte, liegt nun in drei Teile gespalten
+Wei, mächtig und reich an Ressourcen im Norden
+Wu, stolz und maritim stark im Süden
+Shu, klein, gebirgig und voller Idealismus im Westen. 
+Die Menschen leben zwischen Hunger und Hoffnung, zwischen Schwert und Feder. 
+Auf den Märkten wird geflüstert, dass das Zeitalter der Helden angebrochen sei – oder das Ende aller Dinge.
+Händler fürchten marodierende Truppen, Bauern verstecken ihre Töchter vor durchziehenden Generälen...
+...und Dichter schreiben Gedichte, die niemand mehr laut vorliest. 
+Inmitten dieser zerrissenen Welt agieren Männer und Frauen im Schatten 
+Spione, Gesandte, Kriegsstrategen mit mehr Charme als Skrupel. 
+Es heißt, eine einzige Verbindung, ein einziger Pakt – oder ein einziger Kuss – könne über Sieg oder Niederlage entscheiden. 
+Und irgendwo im Reich Shu, weit entfernt vom Blick der Generäle, macht sich jemand auf den Weg. 
+Noch kennt ihn niemand. Noch hat er keine Spur in der Geschichte hinterlassen. Doch das wird sich bald ändern…
 [End]
 
 [SecondScene]

@@ -15,7 +15,7 @@
         <!-- Hintergrundbild, das den gesamten Hintergrund ausfüllt -->
         <ImageView fx:id="backgroundImage" preserveRatio="true" fitWidth="1920" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
             <image>
-                <Image url="@Images\Epilogue-Background.jpg"/>
+                <Image url="@Images/Epilogue-Background.jpg"/>
             </image>
         </ImageView>
         

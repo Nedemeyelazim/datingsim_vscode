@@ -1,27 +1,26 @@
 package com.example.dialogue;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.example.App;
+import com.example.App; // Add this import
 
 import javafx.scene.control.Label;
 
 public class DialogueManager {
-    private static DialogueManager instance;
-    private final List<DialogueLine> dialogueLines;
-    private int currentIndex;
+    private Map<String, List<String>> sceneDialogues = new HashMap<>();
+    private String currentScene;
+    private int currentIndex = 0;
     private Label dialogueLabel;
-    private String currentScene = "FirstScene";
+    private static DialogueManager instance;
 
     private DialogueManager() {
-        this.dialogueLines = new ArrayList<>();
-        this.currentIndex = 0;
     }
 
     public static DialogueManager getInstance() {
@@ -33,54 +32,71 @@ public class DialogueManager {
 
     public void initializeDialog(Label label) {
         this.dialogueLabel = label;
-        if (!dialogueLines.isEmpty()) {
-            showNextLine(); // Zeige erste Zeile, wenn Dialog geladen ist
+        currentIndex = 0;
+        showNextLine();
+    }
+
+    public void loadDialogue(String filename) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new java.io.FileReader(filename))) {
+            String line;
+            String currentScene = null;
+            List<String> currentDialogue = new ArrayList<>();
+
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+
+                if (line.startsWith("[") && line.endsWith("]")) {
+                    // If we were processing a scene, save it
+                    if (currentScene != null && !currentDialogue.isEmpty()) {
+                        sceneDialogues.put(currentScene, new ArrayList<>(currentDialogue));
+                    }
+                    // Start new scene
+                    currentScene = line.substring(1, line.length() - 1);
+                    currentDialogue.clear();
+                } else if (!line.isEmpty() && currentScene != null) {
+                    currentDialogue.add(line);
+                }
+            }
+            // Save the last scene
+            if (currentScene != null && !currentDialogue.isEmpty()) {
+                sceneDialogues.put(currentScene, new ArrayList<>(currentDialogue));
+            }
         }
     }
 
-    public void showNextLine() {
-        System.out.println("\n=== DialogueManager Debug ===");
-        System.out.println("Current Scene: " + currentScene);
-        System.out.println("Current Index: " + currentIndex);
-        System.out.println("Total Lines: " + dialogueLines.size());
+    public void loadDialogueFromStream(InputStream stream) throws IOException {
+        sceneDialogues.clear();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        String line;
+        String currentScene = null;
+        List<String> currentDialogue = new ArrayList<>();
 
-        if (dialogueLabel == null) {
-            System.out.println("ERROR: DialogueLabel ist null!");
-            return;
+        while ((line = reader.readLine()) != null) {
+            line = line.trim();
+            if (line.isEmpty() || line.startsWith("//")) continue;
+
+            if (line.startsWith("[") && line.endsWith("]")) {
+                if (line.equals("[End]")) {
+                    // Save current scene's dialogue when we hit [End]
+                    if (currentScene != null && !currentDialogue.isEmpty()) {
+                        sceneDialogues.put(currentScene, new ArrayList<>(currentDialogue));
+                        currentDialogue.clear();
+                    }
+                } else {
+                    // Start new scene
+                    currentScene = line.substring(1, line.length() - 1);
+                    currentDialogue.clear();
+                }
+            } else if (currentScene != null) {
+                currentDialogue.add(line);
+            }
         }
 
-        if (hasMoreDialogue()) {
-            DialogueLine line = getCurrentLine();
-            
-            // Check for End marker
-            if (line.getCharacter().equals("[End]")) {
-                System.out.println("Found [End] marker - Transitioning to next scene");
-                if (currentScene.equals("FirstScene")) {
-                    try {
-                        System.out.println("Transitioning from FirstScene to SecondScene");
-                        App.setRoot("SecondScene");
-                        currentScene = "SecondScene";
-                    } catch (IOException e) {
-                        System.out.println("ERROR transitioning to SecondScene: " + e.getMessage());
-                    }
-                } else if (currentScene.equals("SecondScene")) {
-                    try {
-                        System.out.println("Transitioning from SecondScene to ThirdScene");
-                        App.setRoot("ThirdScene");
-                        currentScene = "ThirdScene";
-                    } catch (IOException e) {
-                        System.out.println("ERROR transitioning to ThirdScene: " + e.getMessage());
-                    }
-                }
-                advanceDialogue();
-            } else {
-                dialogueLabel.setText(line.getDialogue());
-                System.out.println("Showing dialogue: " + line.getDialogue());
-                advanceDialogue();
-            }
-        } else {
-            System.out.println("No more dialogue available");
-            dialogueLabel.setText("Ende des Dialogs.");
+        // Debug output
+        System.out.println("\n=== Dialogue Loading Debug ===");
+        for (String scene : sceneDialogues.keySet()) {
+            System.out.println("Scene: " + scene);
+            System.out.println("Lines: " + sceneDialogues.get(scene).size());
         }
         System.out.println("===========================\n");
     }
@@ -90,119 +106,62 @@ public class DialogueManager {
         System.out.println("Changing from " + currentScene + " to " + scene);
         
         this.currentScene = scene;
+        this.currentIndex = 0;
         
-        // Reset index for new scene
-        currentIndex = 0;
-        boolean foundScene = false;
-        
-        for (int i = 0; i < dialogueLines.size(); i++) {
-            DialogueLine line = dialogueLines.get(i);
-            if (line.getCharacter().equals(scene)) {
-                currentIndex = i + 1;
-                foundScene = true;
-                System.out.println("Found scene marker at index " + i);
-                break;
-            }
-        }
-        
-        if (!foundScene) {
+        if (!sceneDialogues.containsKey(scene)) {
             System.out.println("WARNING: Scene marker [" + scene + "] not found in dialogue!");
-        } else {
-            System.out.println("Scene changed successfully. New index: " + currentIndex);
+            return;
         }
+        
+        // Reset dialogue label if we have one
+        if (dialogueLabel != null) {
+            dialogueLabel.setText("");
+        }
+        
         System.out.println("=========================\n");
     }
 
-    public void loadDialogue(String filename) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            String currentCharacter = "";
+    public void showNextLine() {
+        if (dialogueLabel == null || currentScene == null) return;
 
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-
-                if (line.startsWith("[") && line.endsWith("]")) {
-                    currentCharacter = line.substring(1, line.length() - 1);
-                } else if (!line.isEmpty()) {
-                    dialogueLines.add(new DialogueLine(currentCharacter, line));
-                }
-            }
+        List<String> currentDialogue = sceneDialogues.get(currentScene);
+        if (currentDialogue == null || currentDialogue.isEmpty()) {
+            System.out.println("WARNING: No dialogue found for scene " + currentScene);
+            return;
         }
-    }
 
-    public void loadDialogueFromStream(InputStream input) throws IOException {
-        dialogueLines.clear();
-        currentIndex = 0;
-        
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
-            String line;
-            String currentCharacter = "";
-            
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (line.isEmpty()) continue;
-                
-                if (line.equals("[End]")) {
-                    dialogueLines.add(new DialogueLine("[End]", ""));
-                    System.out.println("Added End marker to dialogue");
-                }
-                else if (line.startsWith("[") && line.endsWith("]")) {
-                    currentCharacter = line;
-                    dialogueLines.add(new DialogueLine(currentCharacter, ""));
-                    System.out.println("Added scene marker: " + currentCharacter);
-                }
-                else {
-                    dialogueLines.add(new DialogueLine(currentCharacter, line));
-                    System.out.println("Added dialogue line: " + line);
-                }
-            }
-        }
-        System.out.println("Loaded " + dialogueLines.size() + " dialogue lines");
-    }
+        System.out.println("\n=== DialogueManager Debug ===");
+        System.out.println("Current Scene: " + currentScene);
+        System.out.println("Current Index: " + currentIndex);
+        System.out.println("Total Lines: " + currentDialogue.size());
 
-    public DialogueLine getCurrentLine() {
-        if (currentIndex < dialogueLines.size()) {
-            return dialogueLines.get(currentIndex);
-        }
-        return null;
-    }
-
-    public boolean advanceDialogue() {
-        if (currentIndex < dialogueLines.size() - 1) {
+        if (currentIndex < currentDialogue.size()) {
+            String line = currentDialogue.get(currentIndex);
+            dialogueLabel.setText(line);
             currentIndex++;
-            return true;
+            System.out.println("Showing dialogue: " + line);
+        } else {
+            // Handle end of dialogue and scene transitions
+            dialogueLabel.setText("");
+            try {
+                switch (currentScene) {
+                    case "FirstScene":
+                        App.setRoot("SecondScene");
+                        break;
+                    case "SecondScene":
+                        App.setRoot("ThirdScene");
+                        break;
+                    case "ThirdScene":
+                        App.setRoot("menu");
+                        break;
+                    default:
+                        System.out.println("No next scene defined for: " + currentScene);
+                }
+            } catch (IOException e) {
+                System.out.println("Error during scene transition: " + e.getMessage());
+            }
         }
-        return false;
-    }
-
-    public boolean hasMoreDialogue() {
-        return currentIndex < dialogueLines.size();
-    }
-
-    public void resetDialogue() {
-        currentIndex = 0;
-    }
-
-    public static class DialogueLine {
-        private final String character;
-        private final String dialogue;
-
-        public DialogueLine(String character, String dialogue) {
-            this.character = character;
-            this.dialogue = dialogue;
-        }
-
-        public String getCharacter() {
-            return character;
-        }
-
-        public String getDialogue() {
-            return dialogue;
-        }
-
-        @Override
-        public String toString() {
-            return character + ": " + dialogue;
-        }
+        
+        System.out.println("===========================\n");
     }
 }
