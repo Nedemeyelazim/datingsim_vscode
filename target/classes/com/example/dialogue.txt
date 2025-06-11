@@ -35,9 +35,19 @@ Und die Geschichte… sie beginnt genau hier.
 (Liu Bei)          Da bist du ja. Du ahnst sicher, was heute für ein Tag ist.
 (Ryan)             Ist meine Zeit gekommen?
 (Liu Bei)          Ganz genau. Heute beginnt dein Weg außerhalb der Grenzen von Shu.
-(Liu Bei)          Du wurdest von den Besten unterwiesen, Ryan. Jetzt ist es an dir, zu zeigen, wofür du all die Jahre im Schatten gelebt hast.
+(Liu Bei)          Du wurdest von den Besten unterwiesen, Ryan. Jetzt ist es an dir, zu zeigen...
+(Liu Bei)          wofür du all die Jahre im Schatten gelebt hast.
 (Liu Bei)          Nun begebe auf die Reise nach Wei mein Treuer Schatten.
 (Liu Bei)          Deine Loyalität ehrt dich. Geh jetzt – und kehr erst zurück, wenn du gesiegt hast.
 [End]
 
 [FourthScene]
+Liu Bei vertraute mir eine Gruppe an – zehn Männer und Frauen, allesamt echte Schauspieler, Gaukler, Sänger. 
+Unsere Tarnung: eine reisende Theatertruppe. Wir bestiegen eine große, aufwendig verzierte Kutsche.
+gezogen von fünf Pferden. Innen war kaum Platz, aber genug, um unsere Rollen zu üben und unsere Tarnung zu festigen.
+Die Reise war lang, die Wege staubig, doch wir kamen gut voran. In jeder Stadt spielten wir eine andere Geschichte. 
+Jeder von uns spielte eine Rolle – nicht nur auf der Bühne.
+An der Grenze zu Wei wurden wir schließlich angehalten. Ein Kontrollposten, zwei Wachen, ein misstrauischer Blick. 
+Ich griff in mein Gepäck, zog meine Maske über das Gesicht – und wurde zu jemand anderem.
+Der Soldat schaute mich kurz an, dann lachte er nur. "Typisch Theaterleute", murmelte er und ließ uns passieren.
+[End]
