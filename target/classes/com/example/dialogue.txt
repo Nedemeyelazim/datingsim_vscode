@@ -36,7 +36,7 @@ Und die Geschichte… sie beginnt genau hier.
 (Ryan)             "Ist meine Zeit gekommen?"
 (Liu Bei)          "Ganz genau. Heute beginnt dein Weg außerhalb der Grenzen von Shu".
 (Liu Bei)          "Du wurdest von den Besten unterwiesen, Ryan. Jetzt ist es an dir, zu zeigen..."
-(Liu Bei)          "wofür du all die Jahre im Schatten gelebt hast."
+(Liu Bei)          "Wofür du all die Jahre im Schatten gelebt hast."
 (Liu Bei)          "Nun begebe auf die Reise nach Wei mein Treuer Schatten."
 (Liu Bei)          "Deine Loyalität ehrt dich. Geh jetzt – und kehr erst zurück, wenn du gesiegt hast."
 [End]
