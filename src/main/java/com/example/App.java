@@ -139,7 +139,7 @@ public class App extends Application {
                 }
             });
             
-<<<<<<< HEAD
+
             primaryStage.setFullScreen(true);
             DEBUG_MESSAGES.add("Fullscreen mode set");
             
@@ -149,10 +149,10 @@ public class App extends Application {
             }
             
             DEBUG_MESSAGES.add("Scene transition complete");
-=======
+
             // Debug-Logging
             DEBUG_MESSAGES.add("Scene transition initiated");
->>>>>>> 50aa091e0089de120ea7ddac6d255191b1c8c15f
+
             printDebugMessages("Scene Transition");
 
         } catch (Exception e) {
