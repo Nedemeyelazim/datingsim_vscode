@@ -158,8 +158,11 @@ public class DialogueManager {
                         App.setRoot("FifthScene");
                         break;
                     case "FifthScene":
-                        App.setRoot("menu");
+                        App.setRoot("SixthScene");
                         break;
+                    case "SixthScene":
+                        App.setRoot("menu");
+                        break;    
                     default:
                         System.out.println("No next scene defined for: " + currentScene);
                 }

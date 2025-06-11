@@ -8,20 +8,20 @@
 <?import javafx.scene.control.Label?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml" 
-            fx:controller="com.example.FifthSceneController" 
+            fx:controller="com.example.SixthSceneController" 
             fx:id="rootPane" 
             style="-fx-background-color: black;">
     <children>
-        <!-- Hintergrundbild für FifthScene -->
+        <!-- Hintergrundbild für SixthScene -->
         <ImageView fx:id="backgroundImage" preserveRatio="true" fitWidth="1920" 
                    AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0.0" 
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <image>
-                <Image url="@Images/FifthScene-Hintergrund.png"/>
+                <Image url="@Images/Scene Template  1.png"/>
             </image>
         </ImageView>
         
-        <!-- Back Button für FifthScene -->
+        <!-- Back Button für SixthScene -->
         <Button fx:id="topRightButton" styleClass="button" 
                 AnchorPane.topAnchor="88" 
                 AnchorPane.leftAnchor="50">
@@ -34,7 +34,7 @@
             </graphic>
         </Button>
         
-        <!-- Dialog Label für FifthScene -->
+        <!-- Dialog Label für SixthScene -->
         <Label fx:id="dialogueLabel" 
                AnchorPane.bottomAnchor="88"
                AnchorPane.leftAnchor="50"

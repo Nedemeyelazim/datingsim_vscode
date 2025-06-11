@@ -107,7 +107,7 @@ public class App extends Application {
             
             // Configure stage
             primaryStage.setScene(scene);
-            primaryStage.setTitle("Dating Sim - Menu");
+            primaryStage.setTitle("Dating Sim");
             primaryStage.setMaximized(true);
             primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
             primaryStage.setFullScreenExitHint("");
@@ -175,7 +175,7 @@ public class App extends Application {
 
                     // Initialisiere Dialog für Spielszenen
                     if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || 
-                        fxml.equals("ThirdScene") || fxml.equals("FourthScene") || fxml.equals("FifthScene") ) {
+                        fxml.equals("ThirdScene") || fxml.equals("FourthScene") || fxml.equals("FifthScene") || fxml.equals("SixthScene") ) {
                         initializeSceneDialog(fxml);
                     }
 
