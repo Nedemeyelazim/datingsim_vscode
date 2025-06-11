@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +92,13 @@ public class DialogueManager {
             }
         }
 
-        debugSceneDialogues(); // Füge Debug-Ausgabe hinzu
+        // Debug output
+        System.out.println("\n=== Dialogue Loading Debug ===");
+        for (String scene : sceneDialogues.keySet()) {
+            System.out.println("Scene: " + scene);
+            System.out.println("Lines: " + sceneDialogues.get(scene).size());
+        }
+        System.out.println("===========================\n");
     }
 
     public void setCurrentScene(String scene) {
@@ -156,54 +161,6 @@ public class DialogueManager {
                 System.out.println("Error during scene transition: " + e.getMessage());
             }
         }
-        
-        System.out.println("===========================\n");
-    }
-
-    // Füge diese Debug-Methode hinzu
-    private void debugSceneDialogues() {
-        System.out.println("\n=== Dialogue Debug Statistics ===");
-        
-        // Sammle alle Szenen in einer ArrayList für Sortierung
-        ArrayList<String> scenes = new ArrayList<>(sceneDialogues.keySet());
-        
-        // Sortiere Szenen alphabetisch
-        scenes.sort(Comparator.naturalOrder());
-        
-        // Vergleiche Dialogzeilenlängen
-        scenes.forEach(scene -> {
-            List<String> dialogues = sceneDialogues.get(scene);
-            System.out.printf("Scene: %s, Lines: %d%n", scene, dialogues.size());
-            
-            // Finde längste und kürzeste Zeile
-            if (!dialogues.isEmpty()) {
-                String longest = dialogues.stream()
-                    .max(Comparator.comparingInt(String::length))
-                    .orElse("");
-                String shortest = dialogues.stream()
-                    .min(Comparator.comparingInt(String::length))
-                    .orElse("");
-                
-                System.out.printf("  Shortest line (%d chars): %s%n", 
-                    shortest.length(), shortest);
-                System.out.printf("  Longest line (%d chars): %s%n", 
-                    longest.length(), longest);
-            }
-        });
-        
-        // Vergleiche Gesamtdialoglängen zwischen Szenen
-        scenes.sort((s1, s2) -> {
-            return Integer.compare(
-                sceneDialogues.get(s2).size(),
-                sceneDialogues.get(s1).size()
-            );
-        });
-        
-        System.out.println("\nScenes by dialogue length:");
-        scenes.forEach(scene -> 
-            System.out.printf("%s: %d lines%n", 
-                scene, sceneDialogues.get(scene).size())
-        );
         
         System.out.println("===========================\n");
     }
