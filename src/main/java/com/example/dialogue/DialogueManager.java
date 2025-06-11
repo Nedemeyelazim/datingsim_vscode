@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.App; // Add this import
+import com.example.App; 
 
 import javafx.scene.control.Label;
 
