@@ -113,9 +113,9 @@ public class DialogueManager {
             return;
         }
         
-        // Reset dialogue label if we have one
+        // Reset dialogue label and show first line
         if (dialogueLabel != null) {
-            dialogueLabel.setText("");
+            showNextLine(); // Show the first line immediately
         }
         
         System.out.println("=========================\n");
@@ -143,34 +143,43 @@ public class DialogueManager {
         } else {
             // Handle end of dialogue and scene transitions
             dialogueLabel.setText("");
-            try {
-                switch (currentScene) {
-                    case "FirstScene":
-                        App.setRoot("SecondScene");
-                        break;
-                    case "SecondScene":
-                        App.setRoot("ThirdScene");
-                        break;
-                    case "ThirdScene":
-                        App.setRoot("FourthScene");
-                        break;
-                    case "FourthScene":
-                        App.setRoot("FifthScene");
-                        break;
-                    case "FifthScene":
-                        App.setRoot("SixthScene");
-                        break;
-                    case "SixthScene":
-                        App.setRoot("menu");
-                        break;    
-                    default:
-                        System.out.println("No next scene defined for: " + currentScene);
-                }
-            } catch (IOException e) {
-                System.out.println("Error during scene transition: " + e.getMessage());
-            }
+            handleSceneTransition();
         }
         
         System.out.println("===========================\n");
+    }
+
+    private void handleSceneTransition() {
+        try {
+            switch (currentScene) {
+                case "FirstScene":
+                    App.setRoot("SecondScene");
+                    setCurrentScene("SecondScene");
+                    break;
+                case "SecondScene":
+                    App.setRoot("ThirdScene");
+                    setCurrentScene("ThirdScene");
+                    break;
+                case "ThirdScene":
+                    App.setRoot("FourthScene");
+                    setCurrentScene("FourthScene");
+                    break;
+                case "FourthScene":
+                    App.setRoot("FifthScene");
+                    setCurrentScene("FifthScene");
+                    break;
+                case "FifthScene":
+                    App.setRoot("SixthScene");
+                    setCurrentScene("SixthScene");
+                    break;
+                case "SixthScene":
+                    App.setRoot("menu");
+                    break;    
+                default:
+                    System.out.println("No next scene defined for: " + currentScene);
+            }
+        } catch (IOException e) {
+            System.out.println("Error during scene transition: " + e.getMessage());
+        }
     }
 }
