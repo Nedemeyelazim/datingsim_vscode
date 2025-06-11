@@ -114,7 +114,6 @@ public class App extends Application {
      * @throws IOException bei Ladeproblemen
      */
     public static void setRoot(String fxml) throws IOException {
-        Scene oldScene = scene;
         try {
             // Vermeidet doppelte Initialisierung
             if (scene != null && scene.getRoot().getId().equals(fxml)) {
@@ -122,43 +121,60 @@ public class App extends Application {
                 return;
             }
 
-            // Lädt neue Szene im Hintergrund
+            // Lade neue Szene vor dem UI-Update
             Parent root = loadFXML(fxml);
             Scene newScene = new Scene(root);
             newScene.getStylesheets().add(App.class.getResource("menu.css").toExternalForm());
-            
-            // Konfiguriert Stage für nahtlosen Übergang
+
+            // Speichere Vollbild-Status
+            boolean wasFullScreen = primaryStage.isFullScreen();
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setFullScreenExitHint("");
+
+            // Atomarer Szenenwechsel
+            Scene oldScene = scene;
+            scene = newScene;
+
+            // UI-Update in einem einzigen Platform.runLater
             Platform.runLater(() -> {
-                primaryStage.setScene(newScene);
-                scene = newScene;
-                
-                // Initialisiert Dialog wenn nötig
-                if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || 
-                    fxml.equals("ThirdScene")) {
-                    initializeSceneDialog(fxml);
+                try {
+                    // Entferne Event Handler der alten Szene
+                    if (oldScene != null) {
+                        oldScene.setOnKeyPressed(null);
+                        oldScene.setOnKeyReleased(null);
+                    }
+
+                    // Setze neue Szene
+                    primaryStage.setScene(scene);
+                    
+                    // Stelle Vollbild wieder her
+                    if (wasFullScreen) {
+                        primaryStage.setFullScreen(true);
+                    }
+
+                    // Debug Logging
+                    DEBUG_MESSAGES.add("Scene switch completed without leaving fullscreen");
+
+                    // Initialisiere Dialog für Spielszenen
+                    if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || 
+                        fxml.equals("ThirdScene") || fxml.equals("FourthScene")) {
+                        initializeSceneDialog(fxml);
+                    }
+
+                    DEBUG_MESSAGES.add("New Scene Loaded: " + (scene != null));
+                    DEBUG_MESSAGES.add("New FXML: " + fxml);
+                    printDebugMessages("Scene Transition");
+
+                } catch (Exception e) {
+                    DEBUG_MESSAGES.add("ERROR during scene transition: " + e.getMessage());
+                    printDebugMessages("Scene Transition Error");
                 }
             });
-            
 
-            primaryStage.setFullScreen(true);
-            DEBUG_MESSAGES.add("Fullscreen mode set");
-            
-            // Only initialize dialogue for game scenes
-            if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || fxml.equals("ThirdScene") || fxml.equals("FourthScene")) {
-                initializeSceneDialog(fxml);
-            }
-            
-            DEBUG_MESSAGES.add("Scene transition complete");
-
-            // Debug-Logging
-            DEBUG_MESSAGES.add("Scene transition initiated");
-
-            printDebugMessages("Scene Transition");
-
-        } catch (Exception e) {
+        } catch (IOException e) {
             DEBUG_MESSAGES.add("ERROR loading FXML: " + e.getMessage());
             printDebugMessages("FXML Load Error");
-            throw new IOException("Failed to load root: " + e.getMessage(), e);
+            throw e;
         }
     }
 
