@@ -10,7 +10,7 @@ public class SceneTransition {
     
     public static void fadeTransition(Stage stage, Scene oldScene, Scene newScene, Runnable onFinished) {
         // Erste Fade-Out Animation
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(300), oldScene.getRoot());
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(500), oldScene.getRoot());
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
         
