@@ -21,24 +21,29 @@ import javafx.stage.Stage;
 
 /**
  * Hauptklasse der Dating Sim Anwendung.
- * Verwaltet Szenen-Navigation, Dialog-System und Fullscreen-Modus.
+ * Verwaltet die gesamte Anwendungslogik einschließlich:
+ * - Szenen-Navigation und Übergänge
+ * - Dialog-System und Text-Steuerung
+ * - Fullscreen-Modus und Fenster-Management
+ * - Debug-System und Logging
  */
 public class App extends Application {
 
-    // Haupt-UI Komponenten
-    private static Scene scene;  // Aktuelle Szene der Anwendung
-    private static Stage primaryStage;  // Hauptfenster
-    private static final DialogueManager dialogueManager = DialogueManager.getInstance();  // Dialog-System
-    private static Label dialogueLabel;  // Textanzeige für Dialoge
+    // Haupt-UI Komponenten mit erweiterten Beschreibungen
+    private static Scene scene;  // Aktuelle aktive Szene der Anwendung
+    private static Stage primaryStage;  // Hauptfenster der Anwendung
+    private static final DialogueManager dialogueManager = DialogueManager.getInstance();  // Zentrale Dialog-Verwaltung
+    private static Label dialogueLabel;  // Label zur Anzeige des aktuellen Dialogtextes
 
-    // Debug-System
-    private static final ArrayList<String> DEBUG_MESSAGES = new ArrayList<>();  // Sammelt Debug-Nachrichten
+    // Debug-System für Entwicklung und Fehlersuche
+    private static final ArrayList<String> DEBUG_MESSAGES = new ArrayList<>();  // Temporärer Speicher für Debug-Nachrichten
     
     /**
-     * Sortiert Debug-Nachrichten nach Priorität:
-     * 1. Fehlermeldungen
-     * 2. Debug-Header
-     * 3. Nach Länge
+     * Definiert die Sortierreihenfolge für Debug-Nachrichten.
+     * Implementiert eine dreistufige Priorisierung:
+     * 1. Fehlermeldungen (enthält "ERROR") haben höchste Priorität
+     * 2. Debug-Header (enthält "===") haben mittlere Priorität
+     * 3. Alle anderen Nachrichten werden nach Länge sortiert
      */
     private static final Comparator<String> DEBUG_MESSAGE_COMPARATOR = new Comparator<String>() {
         @Override
@@ -55,8 +60,11 @@ public class App extends Application {
     };
 
     /**
-     * Gibt gesammelte Debug-Nachrichten aus und löscht sie.
-     * @param context Beschreibung des Debug-Kontexts
+     * Verarbeitet und gibt Debug-Nachrichten aus.
+     * Sortiert Nachrichten nach Priorität, gibt sie formatiert aus
+     * und löscht den Debug-Nachrichtenspeicher.
+     * 
+     * @param context Beschreibender Text für den Debug-Block
      */
     private static void printDebugMessages(String context) {
         DEBUG_MESSAGES.sort(DEBUG_MESSAGE_COMPARATOR);
@@ -67,10 +75,15 @@ public class App extends Application {
     }
 
     /**
-     * Initialisiert die Anwendung:
-     * 1. Lädt Dialogtexte
-     * 2. Erstellt Hauptmenü
-     * 3. Konfiguriert Vollbildmodus
+     * Initialisiert die Anwendung beim Start.
+     * Führt folgende Schritte aus:
+     * 1. Lädt Dialogtexte aus externer Datei
+     * 2. Erstellt und konfiguriert Hauptmenü
+     * 3. Richtet Vollbildmodus und Fenstereinstellungen ein
+     * 4. Initialisiert Debug-System
+     *
+     * @param stage Das Hauptfenster der Anwendung
+     * @throws Exception Bei Problemen während der Initialisierung
      */
     @Override
     public void start(Stage stage) throws Exception {
@@ -107,11 +120,16 @@ public class App extends Application {
     }
     
     /**
-     * Wechselt zwischen Szenen mit Fullscreen-Erhaltung.
-     * Verhindert Flackern durch atomaren Szenenwechsel.
-     * 
-     * @param fxml Name der zu ladenden FXML-Datei
-     * @throws IOException bei Ladeproblemen
+     * Führt einen Szenenwechsel durch.
+     * Implementiert einen atomaren Übergang mit Vollbild-Erhaltung:
+     * 1. Lädt neue Szene im Hintergrund
+     * 2. Speichert Vollbild-Status
+     * 3. Führt Szenenwechsel in einem einzelnen UI-Update durch
+     * 4. Stellt Vollbild-Modus wieder her
+     * 5. Initialisiert Dialog-System wenn nötig
+     *
+     * @param fxml Name der zu ladenden FXML-Datei (ohne .fxml Endung)
+     * @throws IOException Bei Problemen beim Laden der FXML-Datei
      */
     public static void setRoot(String fxml) throws IOException {
         try {
@@ -178,6 +196,16 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Initialisiert das Dialog-System für eine neue Szene.
+     * Führt folgende Schritte aus:
+     * 1. Sucht das Dialog-Label in der Szene
+     * 2. Konfiguriert DialogueManager für die neue Szene
+     * 3. Richtet Event-Handler für Tastatureingaben ein
+     * 4. Aktiviert Debug-Logging für Dialog-System
+     *
+     * @param fxml Name der Szene für die Dialog initialisiert wird
+     */
     private static void initializeSceneDialog(String fxml) {
         DEBUG_MESSAGES.add("Initializing dialogue for " + fxml);
         
@@ -204,7 +232,11 @@ public class App extends Application {
         });
     }
     
-    // Neue Klasse für den KeyEvent Handler
+    /**
+     * Event-Handler für Tastatureingaben im Dialog-System.
+     * Verarbeitet Leertasten-Eingaben zur Navigation durch Dialoge.
+     * Implementiert Debug-Logging für Tastatureingaben.
+     */
     private static class KeyEventHandler implements EventHandler<KeyEvent> {
         private final Scene scene;
         private final DialogueManager dialogueManager;
@@ -230,11 +262,25 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Hilfsmethode zum Laden von FXML-Dateien.
+     * Sucht FXML-Dateien im Ressourcen-Verzeichnis und lädt sie.
+     *
+     * @param fxml Name der zu ladenden FXML-Datei (ohne .fxml Endung)
+     * @return Parent-Node der geladenen FXML
+     * @throws IOException Bei Problemen beim Laden der FXML-Datei
+     */
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
+    /**
+     * Haupteinstiegspunkt der Anwendung.
+     * Startet die JavaFX-Anwendung.
+     *
+     * @param args Kommandozeilenargumente (nicht verwendet)
+     */
     public static void main(String[] args) {
         launch();
     }
