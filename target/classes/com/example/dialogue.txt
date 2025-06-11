@@ -1,13 +1,13 @@
 [FirstScene]
-Asien, späte Han-Dynastie. Das einst mächtige Kaiserreich ist zerbrochen, zerrissen von endlosen Kriegen, Intrigen und Verrat.
+Asien, späte Han-Dynastie. Die einst mächtige Dynastie ist zerbrochen, zerrissen von endlosen Kriegen, Intrigen und Verrat.
 Was einst unter einem einzigen Banner blühte, liegt nun in drei Teile gespalten
 Wei, mächtig und reich an Ressourcen im Norden
-Wu, stolz und maritim stark im Süden
-Shu, klein, gebirgig und voller Idealismus im Westen. 
+Wu, stolz und stark im Süden
+Shu, klein, gebirgig und voller Shaolins im Westen. 
 Die Menschen leben zwischen Hunger und Hoffnung, zwischen Schwert und Feder. 
-Auf den Märkten wird geflüstert, dass das Zeitalter der Helden angebrochen sei – oder das Ende aller Dinge.
-Händler fürchten marodierende Truppen, Bauern verstecken ihre Töchter vor durchziehenden Generälen...
-...und Dichter schreiben Gedichte, die niemand mehr laut vorliest. 
+Auf den Märkten wird geflüstert, dass das Zeitalter der Helden angebrochen ist – oder das Ende aller Dinge.
+Händler fürchten korrupte Truppen, Bauern verstecken ihre Töchter vor durchziehenden Generälen...
+...und Dichter schreiben Gedichte, die niemand mehr wagt laut vorzulesen. 
 Inmitten dieser zerrissenen Welt agieren Männer und Frauen im Schatten 
 Spione, Gesandte, Kriegsstrategen mit mehr Charme als Skrupel. 
 Es heißt, eine einzige Verbindung, ein einziger Pakt – oder ein einziger Kuss – könne über Sieg oder Niederlage entscheiden. 
@@ -22,7 +22,7 @@ ein einfacher Junge ohne Namen, ohne Herkunft, ohne Vergangenheit....
 Er war freundlich… vielleicht zu freundlich. Doch ich erkannte schnell: Seine Freundlichkeit war nicht umsonst.
 Er wollte aus mir mehr machen. Einen Geist im Schatten. Einen Meister der Masken. Seinen besten Spion.
 Ich wurde unterwiesen von Strategen, Dieben, Schauspielern, Attentätern – jeder von ihnen ein Meister seines Fachs...
- Schlaf war ein Privileg. Schwäche ein Verbrechen.
+Schlaf war ein Privileg. Schwäche ein Verbrechen.
 Den Namen Ryan gab man mir, weil ich nicht wie die anderen aussah. Meine Züge, meine Augen...
 fremd, sagen sie. Ich weiß nicht, woher ich komme. Und meinen Geburtstag habe ich nie gefeiert.
 Aber das spielt keine Rolle.
@@ -32,7 +32,12 @@ Und die Geschichte… sie beginnt genau hier.
 [End]
 
 [ThirdScene]
-Willkommen in der dritten Szene!
-Dies ist die letzte Szene der Geschichte.
-Du kannst von hier aus zurück zur zweiten Szene gehen.
+(Liu Bei)          Da bist du ja. Du ahnst sicher, was heute für ein Tag ist.
+(Ryan)             Ist meine Zeit gekommen?
+(Liu Bei)          Ganz genau. Heute beginnt dein Weg außerhalb der Grenzen von Shu.
+(Liu Bei)          Du wurdest von den Besten unterwiesen, Ryan. Jetzt ist es an dir, zu zeigen, wofür du all die Jahre im Schatten gelebt hast.
+(Liu Bei)          Nun begebe auf die Reise nach Wei mein Treuer Schatten.
+(Liu Bei)          Deine Loyalität ehrt dich. Geh jetzt – und kehr erst zurück, wenn du gesiegt hast.
 [End]
+
+[FourthScene]
