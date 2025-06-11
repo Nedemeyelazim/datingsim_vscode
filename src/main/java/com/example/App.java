@@ -109,7 +109,7 @@ public class App extends Application {
             DEBUG_MESSAGES.add("Fullscreen mode set");
             
             // Only initialize dialogue for game scenes
-            if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || fxml.equals("ThirdScene")) {
+            if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || fxml.equals("ThirdScene") || fxml.equals("FourthScene")) {
                 initializeSceneDialog(fxml);
             }
             
