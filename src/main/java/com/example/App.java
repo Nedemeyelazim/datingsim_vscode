@@ -158,7 +158,7 @@ public class App extends Application {
                         // Initialisiere Dialog für Spielszenen
                         if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || 
                             fxml.equals("ThirdScene") || fxml.equals("FourthScene") || 
-                            fxml.equals("FifthScene") || fxml.equals("SixthScene")) {
+                            fxml.equals("FifthScene") || fxml.equals("SixthScene") || fxml.equals("SeventhScene")) {
                             initializeSceneDialog(fxml);
                         }
                     });

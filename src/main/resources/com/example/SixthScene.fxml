@@ -17,7 +17,7 @@
                    AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0.0" 
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <image>
-                <Image url="@Images/end.png"/>
+                <Image url="@Images/SixthScene-Hintergrund.png"/>
             </image>
         </ImageView>
         

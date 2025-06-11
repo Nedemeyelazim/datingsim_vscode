@@ -59,13 +59,17 @@ Ich wollte mir die Umgebung anschauen, einen ersten Eindruck gewinnen.
 Die Straßen waren ordentlich, sauber, und fast schon zu schön, um echt zu wirken. 
 Während ich durch die Gassen lief, bemerkte ich, wie die Leute mich unfreundlich anguckten wegen meinen Haaren. 
 In einem stillen Moment, als ich langsam durch eine schmale Gasse ging, hörte ich plötzlich eine Stimme.
-Die Stimme war weich, fast wie die einer Frau. Ich drehte mich um…
+Die Stimme war weich, fast wie die einer Frau. 
+[End]
+
+[SixthScene]
+Ich drehte mich um…
 Doch da stand nur ein seltsam aussehender junger Mann.
 (Mei)          "Hmm… Interessante Haarfarbe."
 (Mei)          "Sag mal… trägst du die schon immer? Oder ist das ’ne künstlerische Entscheidung?"
 [End]
 
-[SixthScene]
+[SeventhScene]
 Ende der Demo
 (Made by type soul productions)
 (Credits:) (CEO, Technical Lead): Leonardo (Chief Technology Officer): Hasan (Art Direction): Danila

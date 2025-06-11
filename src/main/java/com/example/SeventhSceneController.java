@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 
-public class FifthSceneController {
+public class SeventhSceneController {
     
     @FXML
     private AnchorPane rootPane;
@@ -23,7 +23,7 @@ public class FifthSceneController {
 
     @FXML
     private void initialize() {
-        System.out.println("FifthScene initializing...");
+        System.out.println("SeventhScene initializing...");
         
         // Debug: Print scene components
         System.out.println("Components check:");
@@ -47,17 +47,17 @@ public class FifthSceneController {
         if (topRightButton != null) {
             topRightButton.setOnAction(event -> {
                 try {
-                    System.out.println("FifthScene: Back button clicked - switching to FourthScene");
-                    App.setRoot("FourthScene");
-                    System.out.println("FifthScene: Switch to FourthScene completed");
+                    System.out.println("SeventhScene: Back button clicked - switching to SixthScene");
+                    App.setRoot("SixthScene");
+                    System.out.println("SeventhScene: Switch to SixthScene completed");
                 } catch (Exception e) {
-                    System.out.println("FifthScene: Error switching scene: " + e.getMessage());
+                    System.out.println("SeventhScene: Error switching scene: " + e.getMessage());
                     e.printStackTrace();
                 }
             });
             System.out.println("Back button handler initialized");
         }
 
-        System.out.println("Fifth initialization complete");
+        System.out.println("SeventhScene initialization complete");
     }
 }
