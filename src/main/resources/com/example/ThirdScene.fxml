@@ -22,11 +22,11 @@
         </ImageView>
         
         <!-- Back Button für ThirdScene -->
-        <Button fx:id="topRightButton" text="" 
+        <Button fx:id="topRightButton" styleClass="button" 
                 AnchorPane.topAnchor="88" 
                 AnchorPane.leftAnchor="50">
             <graphic>
-                <ImageView fitWidth="200" fitHeight="80">
+                <ImageView fitWidth="200" fitHeight="80" preserveRatio="true">
                     <image>
                         <Image url="@Images/BACK Button.png"/>
                     </image>

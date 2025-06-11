@@ -1,14 +1,36 @@
-/* Make buttons transparent */
-#playButton, #quitButton, #topRightButton {
+/* Base button styles */
+.button {
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
 
-/* Highlight effect for buttons when hovered */
-#playButton:hover, #quitButton:hover, #topRightButton:hover {
-    -fx-background-color: #10a7a263;
+/* Hover effect for all buttons */
+.button:hover {
+    -fx-background-color: transparent;
     -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+
+/* Pressed state for all buttons */
+.button:pressed {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.6;
+}
+
+/* Remove default button focus ring */
+.button:focused {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+/* Additional styles for specific buttons if needed */
+#topRightButton {
+    /* Custom styles for back button */
+    -fx-graphic: url("Images/BACK Button.png");
 }

@@ -19,12 +19,12 @@
             </image>
         </ImageView>
         
-        <!-- Back Button (unverändert) -->
-        <Button fx:id="topRightButton" text="" 
+        <!-- Back Button (mit styleClass) -->
+        <Button fx:id="topRightButton" styleClass="button" 
                 AnchorPane.topAnchor="88" 
                 AnchorPane.leftAnchor="50">
             <graphic>
-                <ImageView fitWidth="200" fitHeight="80">
+                <ImageView fitWidth="200" fitHeight="80" preserveRatio="true">
                     <image>
                         <Image url="@Images/BACK Button.png"/>
                     </image>

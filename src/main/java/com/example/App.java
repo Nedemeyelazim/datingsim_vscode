@@ -91,7 +91,14 @@ public class App extends Application {
     public static void setRoot(String fxml) throws IOException {
         Scene oldScene = scene;
         try {
+            // Avoid double initialization
+            if (scene != null && scene.getRoot().getId().equals(fxml)) {
+                DEBUG_MESSAGES.add("WARNING: Attempting to load same scene");
+                return;
+            }
+
             scene = new Scene(loadFXML(fxml));
+            scene.getStylesheets().add(App.class.getResource("menu.css").toExternalForm());
             primaryStage.setScene(scene);
             
             DEBUG_MESSAGES.add("Previous Scene Resources Cleaned: " + (oldScene != null));
@@ -101,7 +108,7 @@ public class App extends Application {
             primaryStage.setFullScreen(true);
             DEBUG_MESSAGES.add("Fullscreen mode set");
             
-            // Dialog für alle Szenen initialisieren
+            // Only initialize dialogue for game scenes
             if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || fxml.equals("ThirdScene")) {
                 initializeSceneDialog(fxml);
             }
