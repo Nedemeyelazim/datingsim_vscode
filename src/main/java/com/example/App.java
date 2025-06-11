@@ -19,15 +19,27 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage; 
 
+/**
+ * Hauptklasse der Dating Sim Anwendung.
+ * Verwaltet Szenen-Navigation, Dialog-System und Fullscreen-Modus.
+ */
 public class App extends Application {
 
-    private static Scene scene;
-    private static Stage primaryStage;
-    private static final DialogueManager dialogueManager = DialogueManager.getInstance();
-    private static Label dialogueLabel;
+    // Haupt-UI Komponenten
+    private static Scene scene;  // Aktuelle Szene der Anwendung
+    private static Stage primaryStage;  // Hauptfenster
+    private static final DialogueManager dialogueManager = DialogueManager.getInstance();  // Dialog-System
+    private static Label dialogueLabel;  // Textanzeige für Dialoge
 
-    // Neue Debug-Hilfsmittel
-    private static final ArrayList<String> DEBUG_MESSAGES = new ArrayList<>();
+    // Debug-System
+    private static final ArrayList<String> DEBUG_MESSAGES = new ArrayList<>();  // Sammelt Debug-Nachrichten
+    
+    /**
+     * Sortiert Debug-Nachrichten nach Priorität:
+     * 1. Fehlermeldungen
+     * 2. Debug-Header
+     * 3. Nach Länge
+     */
     private static final Comparator<String> DEBUG_MESSAGE_COMPARATOR = new Comparator<String>() {
         @Override
         public int compare(String msg1, String msg2) {
@@ -42,6 +54,10 @@ public class App extends Application {
         }
     };
 
+    /**
+     * Gibt gesammelte Debug-Nachrichten aus und löscht sie.
+     * @param context Beschreibung des Debug-Kontexts
+     */
     private static void printDebugMessages(String context) {
         DEBUG_MESSAGES.sort(DEBUG_MESSAGE_COMPARATOR);
         System.out.println("\n=== Debug Output: " + context + " ===");
@@ -50,6 +66,12 @@ public class App extends Application {
         DEBUG_MESSAGES.clear();
     }
 
+    /**
+     * Initialisiert die Anwendung:
+     * 1. Lädt Dialogtexte
+     * 2. Erstellt Hauptmenü
+     * 3. Konfiguriert Vollbildmodus
+     */
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
@@ -85,26 +107,39 @@ public class App extends Application {
     }
     
     /**
-     * Setzt den Root der aktuellen Scene auf die übergebene FXML-Datei.
-     * Beispiel: App.setRoot("FirstScene") wechselt vom Menü zur ersten Spielszene.
+     * Wechselt zwischen Szenen mit Fullscreen-Erhaltung.
+     * Verhindert Flackern durch atomaren Szenenwechsel.
+     * 
+     * @param fxml Name der zu ladenden FXML-Datei
+     * @throws IOException bei Ladeproblemen
      */
     public static void setRoot(String fxml) throws IOException {
         Scene oldScene = scene;
         try {
-            // Avoid double initialization
+            // Vermeidet doppelte Initialisierung
             if (scene != null && scene.getRoot().getId().equals(fxml)) {
                 DEBUG_MESSAGES.add("WARNING: Attempting to load same scene");
                 return;
             }
 
-            scene = new Scene(loadFXML(fxml));
-            scene.getStylesheets().add(App.class.getResource("menu.css").toExternalForm());
-            primaryStage.setScene(scene);
+            // Lädt neue Szene im Hintergrund
+            Parent root = loadFXML(fxml);
+            Scene newScene = new Scene(root);
+            newScene.getStylesheets().add(App.class.getResource("menu.css").toExternalForm());
             
-            DEBUG_MESSAGES.add("Previous Scene Resources Cleaned: " + (oldScene != null));
-            DEBUG_MESSAGES.add("New Scene Loaded: " + (scene != null));
-            DEBUG_MESSAGES.add("New FXML: " + fxml);
+            // Konfiguriert Stage für nahtlosen Übergang
+            Platform.runLater(() -> {
+                primaryStage.setScene(newScene);
+                scene = newScene;
+                
+                // Initialisiert Dialog wenn nötig
+                if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || 
+                    fxml.equals("ThirdScene")) {
+                    initializeSceneDialog(fxml);
+                }
+            });
             
+<<<<<<< HEAD
             primaryStage.setFullScreen(true);
             DEBUG_MESSAGES.add("Fullscreen mode set");
             
@@ -114,14 +149,16 @@ public class App extends Application {
             }
             
             DEBUG_MESSAGES.add("Scene transition complete");
+=======
+            // Debug-Logging
+            DEBUG_MESSAGES.add("Scene transition initiated");
+>>>>>>> 50aa091e0089de120ea7ddac6d255191b1c8c15f
             printDebugMessages("Scene Transition");
-            
+
         } catch (Exception e) {
-            DEBUG_MESSAGES.add("ERROR during scene transition:");
-            DEBUG_MESSAGES.add("Target scene: " + fxml);
-            DEBUG_MESSAGES.add("Error message: " + e.getMessage());
-            printDebugMessages("Scene Transition Error");
-            throw new IOException("Failed to set root: " + e.getMessage(), e);
+            DEBUG_MESSAGES.add("ERROR loading FXML: " + e.getMessage());
+            printDebugMessages("FXML Load Error");
+            throw new IOException("Failed to load root: " + e.getMessage(), e);
         }
     }
 
