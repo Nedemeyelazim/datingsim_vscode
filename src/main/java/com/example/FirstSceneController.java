@@ -20,24 +20,31 @@ public class FirstSceneController {
     
     @FXML
     public void initialize() {
-        System.out.println("FirstScene initialized – alles OK!");
-        
-        // Bildschirmgröße einstellen
-        Screen screen = Screen.getPrimary();
-        double screenWidth = screen.getBounds().getWidth();
-        double screenHeight = screen.getBounds().getHeight();
-        
-        backgroundImage.setFitWidth(screenWidth);
-        backgroundImage.setFitHeight(screenHeight);
-        
-        // Back Button Handler
-        topRightButton.setOnAction(event -> {
-            try {
-                App.setRoot("menu");
-                System.out.println("Top-right Button clicked.");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            System.out.println("=== Component Initialization Debug ===");
+            System.out.println("FirstScene initialized – alles OK!");
+            
+            // Bildschirmgröße einstellen
+            Screen screen = Screen.getPrimary();
+            double screenWidth = screen.getBounds().getWidth();
+            double screenHeight = screen.getBounds().getHeight();
+            
+            backgroundImage.setFitWidth(screenWidth);
+            backgroundImage.setFitHeight(screenHeight);
+            
+            // Back Button Handler
+            topRightButton.setOnAction(event -> {
+                try {
+                    App.setRoot("menu");
+                    System.out.println("Top-right Button clicked.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("=== Initialization Error Debug ===");
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
