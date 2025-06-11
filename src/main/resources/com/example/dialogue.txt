@@ -32,13 +32,13 @@ Und die Geschichte… sie beginnt genau hier.
 [End]
 
 [ThirdScene]
-(Liu Bei)          Da bist du ja. Du ahnst sicher, was heute für ein Tag ist.
-(Ryan)             Ist meine Zeit gekommen?
-(Liu Bei)          Ganz genau. Heute beginnt dein Weg außerhalb der Grenzen von Shu.
-(Liu Bei)          Du wurdest von den Besten unterwiesen, Ryan. Jetzt ist es an dir, zu zeigen...
-(Liu Bei)          wofür du all die Jahre im Schatten gelebt hast.
-(Liu Bei)          Nun begebe auf die Reise nach Wei mein Treuer Schatten.
-(Liu Bei)          Deine Loyalität ehrt dich. Geh jetzt – und kehr erst zurück, wenn du gesiegt hast.
+(Liu Bei)          "Da bist du ja. Du ahnst sicher, was heute für ein Tag ist."
+(Ryan)             "Ist meine Zeit gekommen?"
+(Liu Bei)          "Ganz genau. Heute beginnt dein Weg außerhalb der Grenzen von Shu".
+(Liu Bei)          "Du wurdest von den Besten unterwiesen, Ryan. Jetzt ist es an dir, zu zeigen..."
+(Liu Bei)          "wofür du all die Jahre im Schatten gelebt hast."
+(Liu Bei)          "Nun begebe auf die Reise nach Wei mein Treuer Schatten."
+(Liu Bei)          "Deine Loyalität ehrt dich. Geh jetzt – und kehr erst zurück, wenn du gesiegt hast."
 [End]
 
 [FourthScene]
@@ -50,4 +50,24 @@ Jeder von uns spielte eine Rolle – nicht nur auf der Bühne.
 An der Grenze zu Wei wurden wir schließlich angehalten. Ein Kontrollposten, zwei Wachen, ein misstrauischer Blick. 
 Ich griff in mein Gepäck, zog meine Maske über das Gesicht – und wurde zu jemand anderem.
 Der Soldat schaute mich kurz an, dann lachte er nur. "Typisch Theaterleute", murmelte er und ließ uns passieren.
+[End]
+
+[FifthScene]
+Unsere Ankunft verlief überraschend ruhig. Die Straßen waren stiller als ich erwartet hatte aber ich beschwerte mich nicht.
+Nachdem ich mich von meiner Gruppe verabschiedet hatte, ging ich alleine weiter – einfach der Straße entlang.
+Ich wollte mir die Umgebung anschauen, einen ersten Eindruck gewinnen. 
+Die Straßen waren ordentlich, sauber, und fast schon zu schön, um echt zu wirken. 
+Während ich durch die Gassen lief, bemerkte ich, wie die Leute mich unfreundlich anguckten wegen meinen Haaren. 
+In einem stillen Moment, als ich langsam durch eine schmale Gasse ging, hörte ich plötzlich eine Stimme.
+Die Stimme war weich, fast wie die einer Frau. Ich drehte mich um…
+Doch da stand nur ein seltsam aussehender junger Mann.
+(Mei)          "Hmm… Interessante Haarfarbe."
+(Mei)          "Sag mal… trägst du die schon immer? Oder ist das ’ne künstlerische Entscheidung?"
+[End]
+
+[SixthScene]
+Ende der Demo
+(Made by type soul productions)
+(Credits:) (CEO, Technical Lead): Leonardo (Chief Technology Officer): Hasan (Art Direction): Danila
+(Storyboard): Leonardo Dias Pompl, Danila Schneider
 [End]
