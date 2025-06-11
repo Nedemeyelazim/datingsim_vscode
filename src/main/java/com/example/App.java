@@ -97,31 +97,44 @@ public class App extends Application {
                 return;
             }
 
-            scene = new Scene(loadFXML(fxml));
-            scene.getStylesheets().add(App.class.getResource("menu.css").toExternalForm());
-            primaryStage.setScene(scene);
+            // Pre-load new scene while maintaining fullscreen
+            boolean wasFullScreen = primaryStage.isFullScreen();
             
-            DEBUG_MESSAGES.add("Previous Scene Resources Cleaned: " + (oldScene != null));
-            DEBUG_MESSAGES.add("New Scene Loaded: " + (scene != null));
-            DEBUG_MESSAGES.add("New FXML: " + fxml);
+            // Load and prepare new scene
+            Parent root = loadFXML(fxml);
+            Scene newScene = new Scene(root);
+            newScene.getStylesheets().add(App.class.getResource("menu.css").toExternalForm());
             
-            primaryStage.setFullScreen(true);
-            DEBUG_MESSAGES.add("Fullscreen mode set");
+            // Configure stage before transition
+            primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+            primaryStage.setFullScreenExitHint("");
             
-            // Only initialize dialogue for game scenes
+            // Perform atomic scene switch
+            primaryStage.setScene(newScene);
+            scene = newScene;
+            
+            // Ensure fullscreen is maintained
+            if (wasFullScreen) {
+                primaryStage.setFullScreen(true);
+            }
+            
+            // Initialize dialogue if needed (after scene is set)
             if (fxml.equals("FirstScene") || fxml.equals("SecondScene") || fxml.equals("ThirdScene")) {
                 initializeSceneDialog(fxml);
             }
             
+            // Debug logging
+            DEBUG_MESSAGES.add("Previous Scene Resources Cleaned: " + (oldScene != null));
+            DEBUG_MESSAGES.add("New Scene Loaded: " + (scene != null));
+            DEBUG_MESSAGES.add("Fullscreen State Maintained: " + wasFullScreen);
+            DEBUG_MESSAGES.add("New FXML: " + fxml);
             DEBUG_MESSAGES.add("Scene transition complete");
             printDebugMessages("Scene Transition");
-            
+
         } catch (Exception e) {
-            DEBUG_MESSAGES.add("ERROR during scene transition:");
-            DEBUG_MESSAGES.add("Target scene: " + fxml);
-            DEBUG_MESSAGES.add("Error message: " + e.getMessage());
-            printDebugMessages("Scene Transition Error");
-            throw new IOException("Failed to set root: " + e.getMessage(), e);
+            DEBUG_MESSAGES.add("ERROR loading FXML: " + e.getMessage());
+            printDebugMessages("FXML Load Error");
+            throw new IOException("Failed to load root: " + e.getMessage(), e);
         }
     }
 
