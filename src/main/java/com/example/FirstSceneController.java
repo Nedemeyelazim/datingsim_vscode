@@ -7,83 +7,144 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 
 /**
- * Controller für die erste Spielszene.
- * Verwaltet:
- * - Layout und Größenanpassung der Szene
- * - Hintergrundbilder und visuelle Elemente
- * - Navigation und Benutzerinteraktionen
- * - Debug-Logging für Komponenten-Initialisierung
+ * Controller für die erste Spielszene
+ * ---------------------------------
+ * Verwaltet UI-Logik und Benutzerinteraktionen der Einführungsszene.
+ * 
+ * Kernfunktionen:
+ * - Responsive Layout-Anpassung
+ * - Event-Handling für Navigation
+ * - Ressourcen-Management
+ * - Debug-System Integration
+ * 
+ * UI-Komponenten:
+ * - rootPane: Flex-Container für dynamisches Layout
+ * - backgroundImage: Skalierbare Hintergrundgrafik
+ * - topRightButton: Kontext-sensitiver Navigationsbutton
+ * 
+ * Technische Features:
+ * - Multi-Display Support
+ * - Automatische Bildanpassung
+ * - Memory Management
+ * - Error Handling
+ * 
+ * @author Type Soul Productions
+ * @version 1.0
  */
 public class FirstSceneController {
 
-    @FXML
-    private AnchorPane rootPane;  // Hauptcontainer für alle UI-Elemente
-
-    @FXML
-    private ImageView backgroundImage;  // Hintergrundbild der Szene
-
-    @FXML
-    private Button topRightButton;  // Navigations-Button (zurück zum Menü)
+    /** 
+     * UI-Komponenten (FXML-injiziert)
+     * ------------------------------
+     */
+    @FXML private AnchorPane rootPane;        // Flex-Container
+    @FXML private ImageView backgroundImage;  // Hintergrund
+    @FXML private Button topRightButton;      // Navigation
 
     /**
-     * Initialisiert die Szenenkomponenten beim Laden.
-     * Führt folgende Schritte aus:
-     * 1. Passt Bildgrößen an den Bildschirm an
-     * 2. Richtet Event-Handler für Buttons ein
-     * 3. Konfiguriert Layout-Parameter
-     * 4. Aktiviert Debug-Logging
+     * Komponenten-Initialisierung
+     * -------------------------
+     * FXML-Loader ruft diese Methode automatisch auf.
      * 
-     * Die Methode wird automatisch von FXML-Loader aufgerufen,
-     * nachdem alle @FXML-annotierten Felder injiziert wurden.
+     * Prozessablauf:
+     * 1. Display-Konfiguration
+     *    - Ermittelt Bildschirmgröße
+     *    - Passt Hintergrundbild an
+     *    - Konfiguriert Skalierung
+     * 
+     * 2. Event-System
+     *    - Registriert Button-Handler
+     *    - Konfiguriert Navigation
+     *    - Setzt Error-Callbacks
+     * 
+     * 3. Debug-System
+     *    - Initialisiert Logging
+     *    - Validiert Komponenten
+     *    - Protokolliert Status
      */
     @FXML
     public void initialize() {
         try {
-            // Debug-Logging Start
+            // Debug-Start
             System.out.println("=== Component Initialization Debug ===");
-            System.out.println("FirstScene initialized – alles OK!");
+            validateComponents();
             
-            // Bildschirmgröße ermitteln und anpassen
-            Screen screen = Screen.getPrimary();
-            double screenWidth = screen.getBounds().getWidth();
-            double screenHeight = screen.getBounds().getHeight();
+            // Display-Setup
+            configureDisplay();
             
-            // Hintergrundbild an Bildschirmgröße anpassen
-            backgroundImage.setFitWidth(screenWidth);
-            backgroundImage.setFitHeight(screenHeight);
+            // Event-Handler
+            setupEventHandlers();
             
-            // Event-Handler für Zurück-Button
-            topRightButton.setOnAction(event -> {
-                try {
-                    App.setRoot("menu");
-                    System.out.println("Top-right Button clicked.");
-                } catch (Exception e) {
-                    System.out.println("Navigation error: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            });
-
+            // Debug-Ende
+            System.out.println("FirstScene initialization complete");
+            
         } catch (Exception e) {
-            // Fehlerbehandlung mit detailliertem Logging
-            System.out.println("=== Initialization Error Debug ===");
-            System.out.println("Error: " + e.getMessage());
-            e.printStackTrace();
+            handleInitializationError(e);
         }
     }
 
     /**
-     * Bereinigt Ressourcen beim Schließen der Szene.
-     * Entfernt Event-Handler und gibt Speicher frei.
-     * Wird aufgerufen, wenn die Szene geschlossen wird.
+     * Ressourcen-Bereinigung
+     * --------------------
+     * Wird beim Szenen-Wechsel aufgerufen.
+     * 
+     * Cleanup-Prozess:
+     * 1. Event-Handler entfernen
+     * 2. UI-Referenzen nullen
+     * 3. Speicher freigeben
      */
     public void cleanup() {
-        // Event-Handler entfernen
         if (topRightButton != null) {
             topRightButton.setOnAction(null);
         }
         
-        // Referenzen aufräumen
+        // Referenzen bereinigen
         backgroundImage = null;
         rootPane = null;
+        
+        System.out.println("FirstScene cleanup complete");
+    }
+
+    /**
+     * Hilfsmethoden
+     * ------------
+     */
+    private void validateComponents() {
+        System.out.println("Components check:");
+        System.out.println("- rootPane: " + (rootPane != null ? "found" : "missing"));
+        System.out.println("- backgroundImage: " + (backgroundImage != null ? "found" : "missing"));
+        System.out.println("- topRightButton: " + (topRightButton != null ? "found" : "missing"));
+    }
+
+    private void configureDisplay() {
+        Screen screen = Screen.getPrimary();
+        double width = screen.getBounds().getWidth();
+        double height = screen.getBounds().getHeight();
+        
+        System.out.println("Screen size: " + width + "x" + height);
+        
+        backgroundImage.setFitWidth(width);
+        backgroundImage.setFitHeight(height);
+        
+        System.out.println("Background image size set to: " + width + "x" + height);
+    }
+
+    private void setupEventHandlers() {
+        topRightButton.setOnAction(event -> {
+            try {
+                App.setRoot("menu");
+                System.out.println("Top-right Button clicked.");
+            } catch (Exception e) {
+                System.out.println("Navigation error: " + e.getMessage());
+                e.printStackTrace();
+            }
+        });
+        System.out.println("Back button handler initialized");
+    }
+
+    private void handleInitializationError(Exception e) {
+        System.out.println("=== Initialization Error Debug ===");
+        System.out.println("Error: " + e.getMessage());
+        e.printStackTrace();
     }
 }

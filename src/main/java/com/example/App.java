@@ -20,30 +20,64 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage; 
 
 /**
- * Hauptklasse der Dating Sim Anwendung.
- * Verwaltet die gesamte Anwendungslogik einschließlich:
- * - Szenen-Navigation und Übergänge
- * - Dialog-System und Text-Steuerung
- * - Fullscreen-Modus und Fenster-Management
- * - Debug-System und Logging
+ * Dating Simulation Hauptanwendung
+ * -------------------------------
+ * Eine Visual Novel Engine für interaktive Geschichte im Setting
+ * der Drei Königreiche Chinas.
+ * 
+ * Kernfunktionen:
+ * - Multi-Szenen Management mit flüssigen Übergängen
+ * - Fortgeschrittenes Dialog-System mit Text-Progression
+ * - Persistenter Fullscreen-Modus
+ * - Umfangreiches Debug-System
+ * 
+ * Technische Features:
+ * - JavaFX UI-Framework
+ * - FXML-basierte Szenen-Layouts
+ * - CSS-Styling für konsistentes Design
+ * - Event-basierte Benutzerinteraktion
+ * 
+ * @author Type Soul Productions
+ * @version 1.0
  */
 public class App extends Application {
 
-    // Haupt-UI Komponenten mit erweiterten Beschreibungen
-    private static Scene scene;  // Aktuelle aktive Szene der Anwendung
-    private static Stage primaryStage;  // Hauptfenster der Anwendung
-    private static final DialogueManager dialogueManager = DialogueManager.getInstance();  // Zentrale Dialog-Verwaltung
-    private static Label dialogueLabel;  // Label zur Anzeige des aktuellen Dialogtextes
+    /** 
+     * Zentrale UI-Komponenten
+     * ----------------------
+     * scene: Aktuelle aktive Szene, verwaltet UI-Hierarchie
+     * primaryStage: Hauptfenster der Anwendung, Container für Szenen
+     * dialogueManager: Singleton für zentrales Dialog-Management
+     * dialogueLabel: UI-Element zur Textanzeige in Spielszenen
+     */
+    private static Scene scene;
+    private static Stage primaryStage;
+    private static final DialogueManager dialogueManager = DialogueManager.getInstance();
+    private static Label dialogueLabel;
 
-    // Debug-System für Entwicklung und Fehlersuche
-    private static final ArrayList<String> DEBUG_MESSAGES = new ArrayList<>();  // Temporärer Speicher für Debug-Nachrichten
-    
+    /** 
+     * Debug-System
+     * -----------
+     * Sammelt und organisiert Debug-Nachrichten für strukturierte Ausgabe.
+     * Nachrichten werden nach Priorität sortiert und in Blöcken ausgegeben.
+     */
+    private static final ArrayList<String> DEBUG_MESSAGES = new ArrayList<>();
+
     /**
-     * Definiert die Sortierreihenfolge für Debug-Nachrichten.
-     * Implementiert eine dreistufige Priorisierung:
-     * 1. Fehlermeldungen (enthält "ERROR") haben höchste Priorität
-     * 2. Debug-Header (enthält "===") haben mittlere Priorität
-     * 3. Alle anderen Nachrichten werden nach Länge sortiert
+     * Debug-Nachricht Prioritäts-Sortierung
+     * -----------------------------------
+     * Implementiert 3-stufige Priorisierung für Debug-Ausgaben:
+     * 1. ERROR-Nachrichten (höchste Priorität)
+     *    - Kritische Fehler und Exceptions
+     *    - Sofortige Aufmerksamkeit erforderlich
+     * 
+     * 2. Debug-Header (mittlere Priorität)
+     *    - Markiert durch === Symbole
+     *    - Strukturiert Debug-Ausgaben in Blöcke
+     * 
+     * 3. Standard-Nachrichten (normale Priorität)
+     *    - Nach Länge sortiert für bessere Lesbarkeit
+     *    - Längere Nachrichten erscheinen zuerst
      */
     private static final Comparator<String> DEBUG_MESSAGE_COMPARATOR = new Comparator<String>() {
         @Override
@@ -60,11 +94,15 @@ public class App extends Application {
     };
 
     /**
-     * Verarbeitet und gibt Debug-Nachrichten aus.
-     * Sortiert Nachrichten nach Priorität, gibt sie formatiert aus
-     * und löscht den Debug-Nachrichtenspeicher.
+     * Debug-Ausgabe Prozessor
+     * ----------------------
+     * Verarbeitet gesammelte Debug-Nachrichten:
+     * 1. Sortiert nach definierter Priorität
+     * 2. Formatiert mit Kontext-Header
+     * 3. Gibt als Block aus
+     * 4. Bereinigt Buffer nach Ausgabe
      * 
-     * @param context Beschreibender Text für den Debug-Block
+     * @param context Identifiziert den Debug-Block (z.B. "Scene Transition")
      */
     private static void printDebugMessages(String context) {
         DEBUG_MESSAGES.sort(DEBUG_MESSAGE_COMPARATOR);
@@ -75,15 +113,25 @@ public class App extends Application {
     }
 
     /**
-     * Initialisiert die Anwendung beim Start.
-     * Führt folgende Schritte aus:
-     * 1. Lädt Dialogtexte aus externer Datei
-     * 2. Erstellt und konfiguriert Hauptmenü
-     * 3. Richtet Vollbildmodus und Fenstereinstellungen ein
-     * 4. Initialisiert Debug-System
-     *
-     * @param stage Das Hauptfenster der Anwendung
-     * @throws Exception Bei Problemen während der Initialisierung
+     * Anwendungsstart und Initialisierung
+     * ---------------------------------
+     * Mehrstufiger Startprozess:
+     * 1. Dialog-System
+     *    - Lädt Dialogtexte aus externer Datei
+     *    - Initialisiert DialogueManager
+     * 
+     * 2. UI-Setup
+     *    - Lädt Hauptmenü-FXML
+     *    - Erstellt erste Szene
+     *    - Lädt CSS-Styling
+     * 
+     * 3. Fenster-Konfiguration
+     *    - Setzt Titel und Größe
+     *    - Aktiviert Vollbild
+     *    - Konfiguriert Vollbild-Verhalten
+     * 
+     * @param stage JavaFX Hauptfenster
+     * @throws Exception Bei Initialisierungsfehlern
      */
     @Override
     public void start(Stage stage) throws Exception {

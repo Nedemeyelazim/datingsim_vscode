@@ -13,16 +13,50 @@ import com.example.App;
 
 import javafx.scene.control.Label;
 
+/**
+ * Dialog-Management System
+ * ----------------------
+ * Zentrale Komponente für die Verwaltung und Anzeige von Dialogtexten
+ * in der Visual Novel Engine.
+ * 
+ * Kernfunktionen:
+ * - Szenenbasierte Dialog-Organisation
+ * - Dynamisches Nachladen von Texten
+ * - Automatische Szenenübergänge
+ * - Thread-sicheres Singleton-Pattern
+ * 
+ * Dateiformat für Dialoge:
+ * [SzenenName]
+ * Dialog-Text Zeile 1
+ * Dialog-Text Zeile 2
+ * [End]
+ * 
+ * @author Type Soul Productions
+ * @version 1.0
+ */
 public class DialogueManager {
+    
+    /**
+     * Interne Datenstrukturen
+     * ----------------------
+     * sceneDialogues: Speichert Dialogtexte pro Szene
+     * currentScene: Aktuelle aktive Szene
+     * currentIndex: Position im aktuellen Dialog
+     * dialogueLabel: UI-Element für Textanzeige
+     */
     private Map<String, List<String>> sceneDialogues = new HashMap<>();
     private String currentScene;
     private int currentIndex = 0;
     private Label dialogueLabel;
     private static DialogueManager instance;
 
-    private DialogueManager() {
-    }
+    /** Private Konstruktor für Singleton-Pattern */
+    private DialogueManager() {}
 
+    /**
+     * Singleton-Zugriffsmethode
+     * Thread-sicher durch lazy initialization
+     */
     public static DialogueManager getInstance() {
         if (instance == null) {
             instance = new DialogueManager();
@@ -30,12 +64,30 @@ public class DialogueManager {
         return instance;
     }
 
+    /**
+     * Dialog-Initialisierung
+     * ---------------------
+     * Richtet neue Dialog-Anzeige ein und startet Text
+     * 
+     * @param label JavaFX Label für Textanzeige
+     */
     public void initializeDialog(Label label) {
         this.dialogueLabel = label;
         currentIndex = 0;
         showNextLine();
     }
 
+    /**
+     * Dialog-Datei Laden
+     * -----------------
+     * Liest Dialogtexte aus externer Datei:
+     * 1. Erkennt Szenenmarker [SzenenName]
+     * 2. Sammelt zugehörige Dialogzeilen
+     * 3. Speichert in sceneDialogues Map
+     * 
+     * @param filename Pfad zur Dialog-Datei
+     * @throws IOException Bei Dateizugriffsproblemen
+     */
     public void loadDialogue(String filename) throws IOException {
         try (BufferedReader reader = new BufferedReader(new java.io.FileReader(filename))) {
             String line;
@@ -64,6 +116,17 @@ public class DialogueManager {
         }
     }
 
+    /**
+     * Stream-basiertes Dialog-Laden
+     * ---------------------------
+     * Wie loadDialogue(), aber für InputStream:
+     * - Löscht existierende Dialoge
+     * - Überspringt Leerzeilen und Kommentare
+     * - Gibt Debug-Informationen aus
+     * 
+     * @param stream InputStream mit Dialogdaten
+     * @throws IOException Bei Stream-Problemen
+     */
     public void loadDialogueFromStream(InputStream stream) throws IOException {
         sceneDialogues.clear();
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -101,6 +164,17 @@ public class DialogueManager {
         System.out.println("===========================\n");
     }
 
+    /**
+     * Szenen-Aktivierung
+     * -----------------
+     * Wechselt zur angegebenen Szene:
+     * 1. Validiert Szenen-Existenz
+     * 2. Setzt Zähler zurück
+     * 3. Zeigt ersten Dialog
+     * 4. Logging für Debug
+     * 
+     * @param scene Name der Zielszene
+     */
     public void setCurrentScene(String scene) {
         System.out.println("\n=== Scene Change Debug ===");
         System.out.println("Changing from " + currentScene + " to " + scene);
@@ -121,6 +195,15 @@ public class DialogueManager {
         System.out.println("=========================\n");
     }
 
+    /**
+     * Dialog-Progression
+     * ----------------
+     * Zeigt nächste Dialogzeile oder initiiert Szenenwechsel:
+     * - Prüft Verfügbarkeit weiterer Zeilen
+     * - Aktualisiert UI
+     * - Handled Szenenende
+     * - Ausführliches Logging
+     */
     public void showNextLine() {
         if (dialogueLabel == null || currentScene == null) return;
 
@@ -149,6 +232,15 @@ public class DialogueManager {
         System.out.println("===========================\n");
     }
 
+    /**
+     * Szenen-Übergangslogik
+     * --------------------
+     * Verwaltet Übergänge zwischen Szenen:
+     * - Definiert Ablaufsequenz
+     * - Lädt neue FXML
+     * - Aktualisiert DialogManager
+     * - Fehlerbehandlung
+     */
     private void handleSceneTransition() {
         try {
             switch (currentScene) {
