@@ -12,7 +12,6 @@
             fx:id="rootPane" 
             style="-fx-background-color: black;">
     <children>
-        <!-- Hintergrundbild für FifthScene -->
         <ImageView fx:id="backgroundImage" preserveRatio="true" fitWidth="1920" 
                    AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0.0" 
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -20,8 +19,7 @@
                 <Image url="@Images/FifthScene-Hintergrund.png"/>
             </image>
         </ImageView>
-        
-        <!-- Back Button für FifthScene -->
+
         <Button fx:id="topRightButton" styleClass="button" 
                 AnchorPane.topAnchor="88" 
                 AnchorPane.leftAnchor="50">
@@ -33,8 +31,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        
-        <!-- Dialog Label für FifthScene -->
+
         <Label fx:id="dialogueLabel" 
                AnchorPane.bottomAnchor="88"
                AnchorPane.leftAnchor="50"

@@ -13,7 +13,7 @@
             </image>
         </ImageView>
         
-        <!-- Play Button an fixer Position -->
+
         <Button fx:id="playButton" onAction="#handlePlay" layoutX="265" layoutY="441" text="">
             <graphic>
                 <ImageView fitWidth="193" fitHeight="74">
@@ -24,7 +24,7 @@
             </graphic>
         </Button>
         
-        <!-- Quit Button an fixer Position -->
+  
         <Button fx:id="quitButton" onAction="#handleQuit" layoutX="265" layoutY="654" text="">
             <graphic>
                 <ImageView fitWidth="162" fitHeight="82">

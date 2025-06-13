@@ -12,14 +12,14 @@
             fx:id="rootPane" 
             style="-fx-background-color: black;">
     <children>
-        <!-- Hintergrundbild, das den gesamten Hintergrund ausfüllt -->
+
         <ImageView fx:id="backgroundImage" preserveRatio="true" fitWidth="1920" AnchorPane.topAnchor="50" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
             <image>
                 <Image url="@Images/Epilogue-Background.jpg"/>
             </image>
         </ImageView>
         
-        <!-- Back Button (mit styleClass) -->
+
         <Button fx:id="topRightButton" styleClass="button" 
                 AnchorPane.topAnchor="88" 
                 AnchorPane.leftAnchor="50">
@@ -32,7 +32,7 @@
             </graphic>
         </Button>
         
-        <!-- Dialog Label -->
+
         <Label fx:id="dialogueLabel" 
                AnchorPane.bottomAnchor="88"
                AnchorPane.leftAnchor="50"

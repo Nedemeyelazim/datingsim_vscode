@@ -96,7 +96,7 @@ public class App extends Application {
     /**
      * Debug-Ausgabe Prozessor
      * ----------------------
-     * Verarbeitet gesammelte Debug-Nachrichten:
+     * Verarbeitet gesammelte Debug-Nachrichten:    private static final DialogueManager dialogueManager = DialogueManager.getInstance();  // Dialogue system singleton    private static final DialogueManager dialogueManager = DialogueManager.getInstance();  // Dialogue system singleton
      * 1. Sortiert nach definierter Priorität
      * 2. Formatiert mit Kontext-Header
      * 3. Gibt als Block aus
